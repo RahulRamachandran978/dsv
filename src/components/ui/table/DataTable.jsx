@@ -6,8 +6,9 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { cn } from "../../../utils/cn";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import {
+  MdKeyboardArrowRight,
+  MdKeyboardArrowLeft,
   MdKeyboardDoubleArrowLeft,
   MdKeyboardDoubleArrowRight,
 } from "react-icons/md";
@@ -27,16 +28,22 @@ const DataTable = ({
   });
 
   return (
-    <div className={cn("w-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm", className)}>
+    <div
+      className={cn(
+        "w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-md",
+        className
+      )}
+    >
       <div className="overflow-x-auto">
-        <table className="w-full caption-bottom text-sm text-left">
-          <thead className="bg-gray-50 border-b border-gray-200">
+        <table className="w-full text-sm text-left">
+          {/* Header */}
+          <thead className="sticky top-0 z-10 bg-gray-100 border-b border-gray-200">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="h-12 px-4 text-left align-middle font-medium text-gray-500 [&:has([role=checkbox])]:pr-0"
+                    className="px-5 py-4 text-xs font-semibold uppercase tracking-wide text-gray-600"
                   >
                     {header.isPlaceholder
                       ? null
@@ -49,17 +56,23 @@ const DataTable = ({
               </tr>
             ))}
           </thead>
-          <tbody className="[&_tr:last-child]:border-0">
+
+          {/* Body */}
+          <tbody className="divide-y divide-gray-100">
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+              table.getRowModel().rows.map((row, index) => (
                 <tr
                   key={row.id}
-                  className="border-b transition-colors hover:bg-gray-50/50 data-[state=selected]:bg-gray-100"
+                  className={cn(
+                    "transition-all hover:bg-blue-50/40",
+                    index % 2 === 0 && "bg-white",
+                    index % 2 !== 0 && "bg-gray-50/40"
+                  )}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
-                      className="p-4 align-middle [&:has([role=checkbox])]:pr-0"
+                      className="px-5 py-4 text-gray-700"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -73,19 +86,21 @@ const DataTable = ({
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="h-24 text-center text-gray-500"
+                  className="h-32 text-center text-gray-400"
                 >
-                  No results.
+                  No results found
                 </td>
               </tr>
             )}
           </tbody>
+
+          {/* Footer */}
           {showFooter && (
-            <tfoot className="border-t bg-gray-50 font-medium [&>tr]:last:border-b-0">
+            <tfoot className="border-t bg-gray-100 font-semibold">
               {table.getFooterGroups().map((footerGroup) => (
                 <tr key={footerGroup.id}>
                   {footerGroup.headers.map((header) => (
-                    <td key={header.id} className="p-4 align-middle">
+                    <td key={header.id} className="px-5 py-4">
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -101,42 +116,51 @@ const DataTable = ({
         </table>
       </div>
 
+      {/* Pagination */}
       {enablePagination && (
-        <div className="flex items-center justify-between p-4 border-t border-gray-200 bg-white">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-700">
-              Page {table.getState().pagination.pageIndex + 1} of{" "}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-4 border-t bg-white">
+          <span className="text-sm text-gray-600">
+            Page{" "}
+            <span className="font-semibold">
+              {table.getState().pagination.pageIndex + 1}
+            </span>{" "}
+            of{" "}
+            <span className="font-semibold">
               {table.getPageCount()}
             </span>
-          </div>
-          <div className="flex items-center gap-2">
+          </span>
+
+          <div className="flex items-center gap-1">
             <button
-              className="p-1 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
+              className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <MdKeyboardDoubleArrowLeft className="h-5 w-5" />
+              <MdKeyboardDoubleArrowLeft size={18} />
             </button>
+
             <button
-              className="p-1 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
+              className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <MdKeyboardArrowLeft className="h-5 w-5" />
+              <MdKeyboardArrowLeft size={18} />
             </button>
+
             <button
-              className="p-1 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
+              className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <MdKeyboardArrowRight className="h-5 w-5" />
+              <MdKeyboardArrowRight size={18} />
             </button>
+
             <button
-              className="p-1 rounded-md border border-gray-300 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
+              className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed"
             >
-              <MdKeyboardDoubleArrowRight className="h-5 w-5" />
+              <MdKeyboardDoubleArrowRight size={18} />
             </button>
           </div>
         </div>
