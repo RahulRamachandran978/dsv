@@ -19,7 +19,7 @@ const HeadphoneDetail = () => {
       {/* BACK BUTTON */}
       <button
         onClick={() => navigate("/dashboard/headphones")}
-        className="flex items-center gap-2 mb-6 font-medium hover:text-black"
+        className=" inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-blue-950 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md  hover:cursor-pointer"
       >
         <ArrowLeft size={20} />
         Back to Headphones

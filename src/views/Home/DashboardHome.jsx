@@ -74,7 +74,7 @@ const DashboardHome = () => {
             <div className="flex">
             <button
                 onClick={() => setShowUsers(!showUsers)}
-                className="px-5 py-2 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-700 transition cursor-pointer"
+                className="px-5 py-2 rounded-lg bg-blue-950 text-white font-medium hover:bg-blue-900 transition cursor-pointer"
             >
                 {showUsers ? "Hide User List" : "View User List"}
             </button>

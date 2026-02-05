@@ -19,7 +19,7 @@ const Header = () => {
 
       <button
         onClick={handleLogout}
-        className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-red-500 transition cursor-pointer"
+        className="flex items-center gap-2 text-sm font-medium text-blue-950 hover:text-red-500 transition cursor-pointer"
       >
         <LogOut size={20} />
         Logout

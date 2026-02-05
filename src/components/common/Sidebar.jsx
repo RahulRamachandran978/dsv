@@ -13,7 +13,7 @@ const SidebarItem = ({ icon, label, to }) => {
       to={to}
       className={`flex items-center gap-3 p-3 rounded-lg transition ${
         active
-          ? "bg-blue-600 text-white shadow-md"
+          ? "bg-blue-900 text-white shadow-md"
           : "hover:bg-slate-700 text-slate-300"
       }`}
     >
