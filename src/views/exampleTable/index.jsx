@@ -37,7 +37,7 @@ const ExampleTableView = () => {
             {/* <div className="flex items-center gap-2">
               <span className="text-xs px-3 py-1 rounded-full bg-green-100 text-green-700 font-medium">
                 Live
-              </span>
+              </span> 
             </div> */}
           </div>
 

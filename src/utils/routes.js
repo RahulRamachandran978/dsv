@@ -1,6 +1,7 @@
 export const routes = {
 	home: "/",
-	exampleForm: "example-form",
-	dashBoard:"/dashboard",
-	//exampleTable: "/example-table",
+  dashBoard: "/dashboard",
+  speakers: "/dashboard/speakers",
+  headphones: "/dashboard/headphones",
+  earbuds: "/dashboard/earbuds",
 };
