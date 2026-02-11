@@ -1,7 +1,12 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { earbuds } from "../../utils/earbudData";
-import { ShoppingCart, Star, ArrowLeft } from "lucide-react";
+import {
+  ShoppingCart,
+  Star,
+  ArrowLeft,
+  Check,
+} from "lucide-react";
 
 const EarbudDetail = () => {
   const { id } = useParams();
@@ -14,67 +19,147 @@ const EarbudDetail = () => {
   if (!product) return <h1>Product not found</h1>;
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div className="min-h-screen bg-white">
 
       {/* BACK BUTTON */}
-      <button
-        onClick={() => navigate("/dashboard/earbuds")}
-        className=" inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-xl bg-gray-100 text-gray-700 font-medium hover:bg-blue-950 hover:text-white transition-all duration-300 shadow-sm hover:shadow-md  hover:cursor-pointer"
-      >
-        <ArrowLeft size={20} />
-        Back to Earbuds
-      </button>
+      <div className="max-w-7xl mx-auto px-6 pt-6">
+        <button
+          onClick={() => navigate("/dashboard/earbuds")}
+          className="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-black transition cursor-pointer"
+        >
+          <ArrowLeft size={18} />
+          Back to Earbuds
+        </button>
+      </div>
 
-      <div className="max-w-6xl mx-auto bg-white rounded-3xl shadow-lg p-8 grid md:grid-cols-2 gap-10">
+      {/* MAIN SECTION */}
+      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 px-6 py-12">
 
-        {/* IMAGE */}
-        <div className="bg-gray-50 rounded-2xl p-10">
+        {/* LEFT – IMAGE */}
+        <div className="flex items-center justify-center">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full max-w-md mx-auto hover:scale-105 transition"
+            className="w-full max-w-xl object-contain"
           />
         </div>
 
-        {/* DETAILS */}
-        <div>
-          <h1 className="text-4xl font-bold">
+        {/* RIGHT – DETAILS */}
+        <div className="space-y-6">
+
+          {/* TITLE */}
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900">
             {product.name}
           </h1>
 
-          {/* Rating */}
-          <div className="flex mt-3">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                size={18}
-                className={
-                  i < product.rating
-                    ? "fill-yellow-400 text-yellow-400"
-                    : "text-gray-300"
-                }
-              />
-            ))}
+          {/* RATING */}
+          <div className="flex items-center gap-2">
+            <div className="flex">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  size={18}
+                  className={
+                    i < product.rating
+                      ? "fill-yellow-400 text-yellow-400"
+                      : "text-gray-300"
+                  }
+                />
+              ))}
+            </div>
+
+            <span className="text-sm text-blue-600 font-medium">
+              {product.rating}.0 (180 reviews)
+            </span>
           </div>
 
-          {/* Price */}
-          <div className="mt-6">
-            <span className="text-3xl font-bold">
+          {/* KEY FEATURES */}
+          <ul className="space-y-2 text-gray-700 text-sm">
+            <li className="flex items-center gap-2">
+              <Check className="text-green-600" size={16} />
+              JBL Deep Bass Sound
+            </li>
+
+            <li className="flex items-center gap-2">
+              <Check className="text-green-600" size={16} />
+              Up to 32 Hours Playback
+            </li>
+
+            <li className="flex items-center gap-2">
+              <Check className="text-green-600" size={16} />
+              IP54 Water & Dust Resistant
+            </li>
+
+            <li className="flex items-center gap-2">
+              <Check className="text-green-600" size={16} />
+              Bluetooth 5.3 Fast Pairing
+            </li>
+          </ul>
+
+          {/* COLOR OPTIONS */}
+          <div>
+            <p className="text-sm font-semibold text-gray-900 mb-2">
+              Color
+            </p>
+
+            <div className="flex gap-3">
+              <span className="w-8 h-8 bg-black rounded border cursor-pointer"></span>
+              <span className="w-8 h-8 bg-white border rounded cursor-pointer"></span>
+              <span className="w-8 h-8 bg-blue-500 rounded border cursor-pointer"></span>
+            </div>
+          </div>
+
+          {/* PRICE */}
+          <div>
+            <p className="text-3xl font-extrabold text-red-600">
               ₹{product.price}
-            </span>
-            <span className="line-through ml-3 text-gray-400">
-              ₹{product.oldPrice}
-            </span>
+            </p>
+
+            <p className="text-sm text-gray-500">
+              M.R.P:
+              <span className="line-through ml-2">
+                ₹{product.oldPrice}
+              </span>
+
+              <span className="text-red-600 font-semibold ml-2">
+                SAVE ₹{product.oldPrice - product.price}
+              </span>
+            </p>
+
+            <p className="text-xs text-gray-500 mt-1">
+              Inclusive of all taxes
+            </p>
           </div>
 
-          <p className="mt-6 text-gray-600">
+          {/* QUANTITY */}
+          <div className="flex items-center gap-4">
+            <button className="px-3 py-1 border rounded hover:bg-gray-100">
+              -
+            </button>
+
+            <span className="font-medium">1</span>
+
+            <button className="px-3 py-1 border rounded hover:bg-gray-100">
+              +
+            </button>
+          </div>
+
+          {/* ADD TO CART */}
+          <button className="w-full flex items-center justify-center gap-3 bg-orange-600 hover:bg-orange-700 text-white py-4 rounded font-semibold transition shadow-md">
+            <ShoppingCart size={20} />
+            Add to Cart
+          </button>
+
+          {/* DELIVERY */}
+          <p className="text-green-600 text-sm font-medium">
+            In Stock | Fast & Free Delivery (2–4 Days)
+          </p>
+
+          {/* DESCRIPTION */}
+          <p className="text-gray-600 pt-4 border-t">
             {product.description}
           </p>
 
-          <button className="mt-8 flex items-center gap-3 bg-black text-white px-8 py-4 rounded-xl hover:bg-gray-800 transition">
-            <ShoppingCart />
-            Add to Cart
-          </button>
         </div>
       </div>
     </div>

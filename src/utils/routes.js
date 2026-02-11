@@ -4,4 +4,5 @@ export const routes = {
   speakers: "/dashboard/speakers",
   headphones: "/dashboard/headphones",
   earbuds: "/dashboard/earbuds",
+  adduser: "/dashboard/add-user",
 };

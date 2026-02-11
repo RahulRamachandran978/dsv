@@ -85,11 +85,20 @@ const DashboardHome = () => {
             {showUsers && (
             <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
                 <div className="p-4 border-b bg-gray-50 flex justify-between items-center">
-                <h2 className="font-semibold text-gray-700">
-                    Users List
+  
+                <h2 className="font-semibold text-gray-700 text-lg">
+                  Users List
                 </h2>
-                </div>
 
+                <button
+                  onClick={() => navigate("/dashboard/add-user")}
+                  className="px-5 py-2 rounded-lg bg-blue-950 text-white font-medium 
+                            hover:bg-blue-900 transition-all duration-300 
+                            shadow-sm hover:shadow-md"
+                >
+                  + Add User
+                </button>
+              </div>
                 <div className="p-0">
                 <ExampleTableView />
                 </div>

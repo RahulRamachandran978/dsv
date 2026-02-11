@@ -89,18 +89,18 @@ const FormController = ({
             </div>
           ) : /* Radio Input */
           type === "radio" ? (
-            <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-6 h-[42px]">
               {options.map((option) => (
                 <div key={option.value} className="flex items-center space-x-2">
                   <input
                     type="radio"
                     id={`${name}-${option.value}`}
                     value={option.value}
-                    checked={value === option.value}
+                    checked={value === option.value} 
                     onChange={onChange}
                     className="aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                     {...field}
-                    {...props}
+                    {...props}  
                   />
                   <label
                     htmlFor={`${name}-${option.value}`}

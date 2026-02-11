@@ -26,6 +26,7 @@ const Login = () => {
     });
 
     const onSubmit =(data) =>{
+        sessionStorage.setItem("user", JSON.stringify(data));
         console.log(data);
         navigate('/dashboard');
     }

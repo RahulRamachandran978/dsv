@@ -3,7 +3,7 @@ import DataTable from "../../components/ui/table/DataTable";
 import { tableData, tableColumns } from "../../utils/tableConfig";
 import { Database } from "lucide-react";
 
-const ExampleTableView = () => {
+const   ExampleTableView = () => {
   const data = useMemo(() => tableData, []);
   const columns = useMemo(() => tableColumns, []);
 

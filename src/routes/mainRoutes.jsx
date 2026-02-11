@@ -18,6 +18,7 @@ const EarBuds = laodable(lazy(() => import("../views/Home/EarBuds")));
 const HeadPhones = laodable(lazy(() => import("../views/Home/HeadPhones")));
 const HeadphoneDetail = laodable(lazy(() => import("../views/Home/HeadphoneDetail")));
 const EarbudDetail = laodable(lazy(() => import("../views/Home/EarbudDetail")));
+const AddUser  = laodable(lazy(() => import("../views/AddUser")));
 
 const mainRoutes = () => {
 	return [
@@ -36,6 +37,7 @@ const mainRoutes = () => {
 			{ path: "headphones/:id", element: <HeadphoneDetail /> },
 			{ path: "earbuds", element: <EarBuds /> },
 			{ path: "earbuds/:id", element: <EarbudDetail /> },
+			{ path: "add-user", element: <AddUser /> },
 			],
 		},
 	];
