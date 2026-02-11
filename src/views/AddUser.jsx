@@ -1,26 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, UserPlus } from "lucide-react";
 import FormController from "../components/ui/formcontroller/FormController";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-// import { userSchema } from "../schemas/userSchema";  
 
 const userSchema = z.object({
   username: z.string().min(1, "Username is required"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Min length is 6 characters"),
-  role:z.string().min(1,"Role is required"),
-  gender:z.string().min(1,"Gender is required"),
-  birthdate:z.string().min(1,"Birthdate is required"),
-  bio:z.string().min(1,"Bio is required"),
-  terms:z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
+  role: z.string().min(1, "Role is required"),
+  gender: z.string().min(1, "Gender is required"),
+  birthdate: z.string().min(1, "Birthdate is required"),
+  bio: z.string().min(1, "Bio is required"),
+  terms: z.boolean().refine(val => val === true, "You must accept the terms and conditions"),
 });
 
-
 const AddUser = () => {
-
   const navigate = useNavigate();
 
   const form = useForm({
@@ -43,57 +40,58 @@ const AddUser = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-
-      {/* Back */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6 md:p-12">
+      {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center gap-2 mb-6 text-gray-600 hover:text-black cursor-pointer"
+        className="inline-flex items-center gap-2 mb-8 text-slate-600 hover:text-slate-900 font-medium transition-all duration-300 hover:scale-105"
       >
-        <ArrowLeft size={18} />
+        <ArrowLeft size={20} />
         Back
       </button>
 
       {/* FORM CARD */}
-      <div className="max-w-4xl mx-auto bg-white border rounded-xl shadow-sm p-8">
-
-        <h1 className="text-2xl font-semibold mb-6">
-          Add User
-        </h1>
+      <div className="max-w-5xl mx-auto bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl shadow-2xl p-8 md:p-12">
+        <div className="flex items-center gap-4 mb-8">
+          <div className="p-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl shadow-lg">
+            <UserPlus className="h-8 w-8 text-white" />
+          </div>
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
+              Add New User
+            </h1>
+            <p className="text-slate-600 mt-1">Fill in the details to create a new user account.</p>
+          </div>
+        </div>
 
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-2 gap-6"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8"
         >
-
-          {/* Username */}
+          {/* Username & Email */}
           <FormController
             label="Username"
             type="text"
             control={form.control}
             name="username"
-            placeholder="Enter username"
+            placeholder="john_doe"
           />
-
-          {/* Email */}
           <FormController
             label="Email"
             type="email"
             control={form.control}
             name="email"
-            placeholder="Enter email"
+            placeholder="john@example.com"
           />
 
-          {/* Password */}
+          {/* Password & Role */}
           <FormController
             label="Password"
             type="password"
             control={form.control}
             name="password"
-            placeholder="Enter password"
+            placeholder="••••••••"
           />
-
-          {/* Role */}
           <FormController
             label="Role"
             type="select"
@@ -106,7 +104,7 @@ const AddUser = () => {
             ]}
           />
 
-          {/* Gender */}
+          {/* Gender & Birthdate */}
           <FormController
             label="Gender"
             type="radio"
@@ -118,8 +116,6 @@ const AddUser = () => {
               { label: "Other", value: "other" },
             ]}
           />
-
-          {/* Birthdate */}
           <FormController
             label="Birthdate"
             type="date"
@@ -127,19 +123,19 @@ const AddUser = () => {
             name="birthdate"
           />
 
-          {/* Bio full width */}
-          <div className="col-span-2">
+          {/* Bio - Full Width */}
+          <div className="lg:col-span-2">
             <FormController
               label="Bio"
               type="textarea"
               control={form.control}
               name="bio"
-              placeholder="Tell something..."
+              placeholder="Tell us about yourself..."
             />
           </div>
 
-          {/* File */}
-          <div className="col-span-2">
+          {/* File & Terms - Full Width */}
+          <div className="lg:col-span-2">
             <FormController
               label="Profile Picture"
               type="file"
@@ -148,10 +144,9 @@ const AddUser = () => {
             />
           </div>
 
-          {/* Terms */}
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             <FormController
-              label="I accept terms and conditions"
+              label="I accept the terms and conditions"
               type="checkbox"
               control={form.control}
               name="terms"
@@ -159,23 +154,20 @@ const AddUser = () => {
           </div>
 
           {/* Buttons */}
-          <div className="col-span-2 flex justify-end gap-3 mt-4">
-
+          <div className="lg:col-span-2 flex flex-col sm:flex-row justify-end gap-4 pt-6">
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="px-5 py-2 border rounded-lg hover:bg-gray-100 cursor-pointer"
+              className="flex-1 sm:w-auto px-8 py-3 border-2 border-slate-200 text-slate-700 rounded-2xl font-semibold shadow-sm transition-all duration-300 hover:shadow-lg hover:border-slate-300 hover:bg-slate-50 active:scale-95"
             >
               Cancel
             </button>
-
             <button
               type="submit"
-              className="px-6 py-2 bg-blue-950 text-white rounded-lg hover:bg-blue-900 cursor-pointer"
+              className="flex-1 sm:w-auto px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl hover:from-indigo-700 hover:to-purple-700 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
             >
               Create User
             </button>
-
           </div>
         </form>
       </div>

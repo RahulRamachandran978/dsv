@@ -89,7 +89,7 @@ const HeadphoneDetail = () => {
           </ul>
 
           {/* COLOR OPTIONS */}
-          <div>
+          {/* <div>
             <p className="text-sm font-semibold text-gray-900 mb-2">
               Color
             </p>
@@ -98,7 +98,7 @@ const HeadphoneDetail = () => {
               <span className="w-8 h-8 bg-blue-600 rounded border cursor-pointer"></span>
               <span className="w-8 h-8 bg-white border rounded cursor-pointer"></span>
             </div>
-          </div>
+          </div> */}
 
           {/* PRICE */}
           <div>

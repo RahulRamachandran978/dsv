@@ -8,19 +8,19 @@ const   ExampleTableView = () => {
   const columns = useMemo(() => tableColumns, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 md:px-8 py-6">
+    <div className="min-h-screen bg-gray-50 px-4 md:px-8">
       {/* Page Header */}
       <div className="max-w-7xl mx-auto mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-xl bg-blue-100 text-blue-600">
+          {/* <div className="p-3 rounded-xl bg-blue-100 text-blue-600">
             <Database size={22} />
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <h1 className="text-2xl font-bold text-gray-900">
               Users List
             </h1>
             
-          </div>
+          </div> */}
         </div>
       </div>
 
