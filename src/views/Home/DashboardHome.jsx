@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useRef} from "react";
 import ExampleTableView from "../exampleTable";
 import { tableData } from "../../utils/tableConfig";
 import {
@@ -12,10 +12,13 @@ import {
   DollarSign,
 } from "lucide-react";  
 import { useNavigate } from "react-router-dom";
+import UserRoleChart from "./UserRoleChart";
+import DashboardCalendar from "./DashboardCalendar";
 
 const DashboardHome = () => {
   const [showUsers, setShowUsers] = useState(false);
   const navigate = useNavigate();
+  const tableRef = useRef(null);
   
   const totalUsers = tableData.length;
   const adminCount = tableData.filter(user => user.role === "Admin").length;
@@ -39,8 +42,20 @@ const DashboardHome = () => {
           
           <div className="flex flex-col sm:flex-row gap-3">
             <button
-              onClick={() => setShowUsers(!showUsers)}
-              className="px-6 py-2.5 bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-gray-300 text-gray-900 font-semibold text-sm transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
+              onClick={() => {
+                const newState = !showUsers;
+                setShowUsers(newState);
+
+                if(!showUsers){
+                  setTimeout(() => {
+                    tableRef.current?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                  }, 100);
+                }
+              }}
+              className="px-6 py-2.5 bg-white border hover:cursor-pointer border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-gray-300 text-gray-900 font-semibold text-sm transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
             >
               {showUsers ? (
                 <>
@@ -93,9 +108,20 @@ const DashboardHome = () => {
           />
         </div>
 
+         {/* CHART + CALENDAR SECTION */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <UserRoleChart
+              adminCount={adminCount}
+              userCount={userCount}
+              editorCount={editorCount}
+            />
+
+            <DashboardCalendar />
+          </div>
+
         {/* USERS TABLE */}
         {showUsers && (
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+          <div ref={tableRef} className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
             {/* Table Header */}
             <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -164,6 +190,8 @@ const StatCard = ({ icon, label, value, change, color, isPositive }) => {
       border: "border-orange-200",
     },
   };
+
+ 
 
   return (
     <div className="group relative bg-white/70 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden h-full">

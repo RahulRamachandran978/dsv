@@ -7,8 +7,11 @@ import {
   ArrowLeft,
   Check,
 } from "lucide-react";
+import { useCart } from "../../context/CartContext";
 
 const SpeakerDetail = () => {
+
+  const { dispatch } = useCart();
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -88,17 +91,6 @@ const SpeakerDetail = () => {
             </li>
           </ul>
 
-          {/* COLOR OPTIONS */}
-          {/* <div>
-            <p className="text-sm font-semibold text-gray-900 mb-2">
-              Color
-            </p>
-            <div className="flex gap-3">
-              <span className="w-8 h-8 bg-black rounded border cursor-pointer"></span>
-              <span className="w-8 h-8 bg-red-500 rounded border cursor-pointer"></span>
-              <span className="w-8 h-8 bg-blue-500 rounded border cursor-pointer"></span>
-            </div>
-          </div> */}
 
           {/* PRICE */}
           <div>
@@ -136,7 +128,10 @@ const SpeakerDetail = () => {
           </div>
 
           {/* ADD TO CART */}
-          <button className="w-full flex items-center justify-center gap-3 bg-orange-600 hover:bg-orange-700 text-white py-4 rounded font-semibold transition shadow-md">
+          <button onClick={()=> dispatch({
+            type: "ADD_TO_CART",
+             payload: product,
+          })} className="w-full flex items-center justify-center gap-3 bg-orange-600 hover:bg-orange-700 text-white py-4 rounded font-semibold transition shadow-md">
             <ShoppingCart size={20} />
             Add to Cart
           </button>

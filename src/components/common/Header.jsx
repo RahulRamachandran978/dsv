@@ -1,6 +1,9 @@
 import React from "react";
-import { LogOut, ChevronDown, Bell, Search, Menu } from "lucide-react";
+import { LogOut, ChevronDown, Bell, Search, Menu, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -8,6 +11,16 @@ const Header = () => {
   const handleLogout = () => {
     navigate("/");
   };
+  const handleCart = ()=>{
+    navigate("/dashboard/cart");
+  }
+  const { cart } = useCart();
+
+const cartCount = cart.reduce(
+  (total, item) => total + item.qty,
+  0
+);
+
 
   return (
     <header className="h-16 bg-white/90 backdrop-blur-xl border-b border-gray-200/60 shadow-sm sticky top-0 z-50">
@@ -37,10 +50,18 @@ const Header = () => {
           </button>
 
           {/* Notifications */}
-          <button className="relative p-2.5 hover:cursor-pointer text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 hover:scale-105 group">
+          {/* <button className="relative p-2.5 hover:cursor-pointer text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 hover:scale-105 group">
             <Bell size={18} />
             <span className="absolute -top-1 -right-1 min-w-[18px] h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold animate-pulse shadow-lg">
               3
+            </span>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -blur-[1px]" />
+          </button> */}
+
+          <button onClick={handleCart} className="relative p-2.5 hover:cursor-pointer text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-300 hover:scale-105 group">
+            <ShoppingCart size={18} />
+            <span className="absolute -top-1 -right-1 min-w-[18px] h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold animate-pulse shadow-lg">
+              {cartCount}
             </span>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -blur-[1px]" />
           </button>

@@ -5,4 +5,5 @@ export const routes = {
   headphones: "/dashboard/headphones",
   earbuds: "/dashboard/earbuds",
   adduser: "/dashboard/add-user",
+  cart: "/dashboard/cart",
 };
