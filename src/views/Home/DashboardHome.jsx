@@ -10,6 +10,7 @@ import {
   Users as UsersIcon,
   TrendingUp,
   DollarSign,
+  X,
 } from "lucide-react";  
 import { useNavigate } from "react-router-dom";
 import UserRoleChart from "./UserRoleChart";
@@ -17,6 +18,7 @@ import DashboardCalendar from "./DashboardCalendar";
 
 const DashboardHome = () => {
   const [showUsers, setShowUsers] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const tableRef = useRef(null);
   
@@ -31,43 +33,14 @@ const DashboardHome = () => {
         
         {/* HEADER SECTION */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-end gap-4">
-          {/* <div className="flex flex-col space-y-1">
-            <h1 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">
-              Dashboard Overview
-            </h1>
-            <p className="text-gray-600 text-lg max-w-md">
-              Welcome back! Here's what's happening with your user base today.
-            </p>
-          </div> */}
           
           <div className="flex flex-col sm:flex-row gap-3">
             <button
-              onClick={() => {
-                const newState = !showUsers;
-                setShowUsers(newState);
-
-                if(!showUsers){
-                  setTimeout(() => {
-                    tableRef.current?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-                  }, 100);
-                }
-              }}
+              onClick={() => setIsModalOpen(true)}
               className="px-6 py-2.5 bg-white border hover:cursor-pointer border-gray-200 rounded-xl shadow-sm hover:shadow-md hover:border-gray-300 text-gray-900 font-semibold text-sm transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
             >
-              {showUsers ? (
-                <>
-                  <UsersIcon size={18} />
-                  Hide Users
-                </>
-              ) : (
-                <>
-                  <Users size={18} />
-                  View Users
-                </>
-              )}
+              <Users size={18} />
+              View Users
             </button>
           </div>
         </div>
@@ -119,44 +92,10 @@ const DashboardHome = () => {
             <DashboardCalendar />
           </div>
 
-        {/* USERS TABLE */}
-        {showUsers && (
-          <div ref={tableRef} className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
-            {/* Table Header */}
-            <div className="px-6 py-5 border-b border-gray-100 bg-gray-50">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <div className="min-w-0 flex-1">
-                  <h2 className="text-xl font-semibold text-gray-900 tracking-tight">
-                    Users List
-                  </h2>
-                  <p className="text-sm text-gray-500 mt-1">
-                    View all user accounts
-                  </p>
-                </div>
-                
-                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto sm:ml-auto">
-                  
-                  <button
-                    onClick={() => navigate("/dashboard/add-user")}
-                    className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-2 whitespace-nowrap"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Add User
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Table Container */}
-            <div className="overflow-x-auto">
-              <div className="min-w-full divide-y divide-gray-200">
-                <ExampleTableView />
-              </div>
-            </div>
-          </div>
-        )}
+          <UsersModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+          />
       </main>
     </div>
   );
@@ -231,5 +170,50 @@ const StatCard = ({ icon, label, value, change, color, isPositive }) => {
     </div>
   );
 };
+
+const UsersModal = ({ isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      
+      {/* Overlay */}
+      <div
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal */}
+      <div className="relative bg-white w-[95%] max-w-6xl max-h-[85vh] rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        
+        {/* Header */}
+        <div className="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">
+              Users List
+            </h2>
+            <p className="text-sm text-gray-500">
+              View all user accounts
+            </p>
+          </div>
+
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-red-500
+             text-lg hover:cursor-pointer  font-semibold"
+          >
+           <X size={25} />
+          </button>
+        </div>
+
+        {/* Table Section */}
+          <div className="max-h-[60vh] overflow-y-auto pr-2">
+            <ExampleTableView />
+          </div>
+        </div>
+    </div>
+  );
+};
+
 
 export default DashboardHome;
